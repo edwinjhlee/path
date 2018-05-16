@@ -1,0 +1,30 @@
+{
+  "name": "ts-path",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lteam18/ts-path.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lteam18/ts-path/issues"
+  },
+  "homepage": "https://github.com/lteam18/ts-path#readme",
+  "devDependencies": {
+    "@types/node": "^10.1.0",
+    "ts-lint": "^4.5.1",
+    "ts-node": "^6.0.3",
+    "typescript": "^2.8.3",
+    "typescript-formatter": "^7.2.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.10"
+  }
+}
