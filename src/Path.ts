@@ -1,4 +1,5 @@
 import fs from "fs"
+import F from "fs-extra"
 
 import P from "path"
 
@@ -37,17 +38,11 @@ export class Path{
     }
 
     public exists(): Promise<boolean>{
-        return Path.exists(this.path)
-    }
-
-    public static exists(path: string): Promise<boolean>{
-        return new Promise((resolve, reject) => {
-            fs.exists(path, resolve)
-        })
+        return F.pathExists(this.path)
     }
 
     public existsSync(): boolean{
-        return fs.existsSync(this.path)
+        return F.pathExistsSync(this.path)
     }
 
 }

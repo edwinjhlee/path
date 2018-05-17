@@ -1,4 +1,5 @@
 import fs from "fs"
+import F from "fs-extra"
 
 import { Path } from "./Path"
 
@@ -13,21 +14,11 @@ export class File extends Path{
         if (await this.exists() === false){
             throw new Error("Not exists")
         }
-        return new Promise( (resolve, reject) => {
-            fs.appendFile(this.path, astr, (err)=>{
-                if (err) reject(err)
-                else resolve()
-            })
-        })
+        return F.appendFile(this.path, astr)
     }
 
     public async write(astr: string){
-        return new Promise( (resolve, reject) => {
-            fs.writeFile(this.path, astr, (err)=>{
-                if (err) reject(err)
-                else resolve()
-            })
-        })
+        return F.writeFile(this.path, astr)
     }
 
     public async createAndWrite(astr: string) {

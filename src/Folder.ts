@@ -16,19 +16,7 @@ export class Folder extends Path{
     }
 
     public create(){
-        return Folder.make(this.path)
-    }
-
-    public static make(path: string){
-        return new Promise((resolve, reject) => {
-            fs.mkdir(path, (e) => {
-                if (e){
-                    reject(e)
-                } else {
-                    resolve()
-                }
-            })
-        })
+        return F.mkdir(this.path)
     }
 
     public createSync(){
@@ -36,27 +24,15 @@ export class Folder extends Path{
     }
 
     public async createAll(){
-        await Folder.mkdirp(this.path)
+        return F.mkdirp(this.path)
     }
 
-    public async list(){
-        return Folder.list(this.path)
-    }
-
-    public static async list(path: string){
-        return new Promise<string[]>( (resolve, reject) => {
-            fs.readdir(path, (e, files) => {
-                if (e) {
-                    reject(e)
-                } else {
-                    resolve(files)
-                }
-            })
-        })
+    public async read(){
+        return F.readdir(this.path)
     }
 
     public static async listRecursively(path: string): Promise<t.FolderContainer>{
-        const listed_files = await Folder.list(path)
+        const listed_files = await F.readdir(path)
         const files: Array<string> = []
         const folders: Array<t.FolderContainer> = []
         for (const f of listed_files) {
@@ -68,17 +44,6 @@ export class Folder extends Path{
             }
         }
         return { files, folders }
-    }
-
-    public static async mkdirp(path: string){
-        //
-        try{
-            await Folder.make(path)
-        } catch(err) {
-            const dir = P.dirname(path)
-            await Folder.mkdirp(dir)
-            await Folder.make(path)
-        }
     }
 
 }
