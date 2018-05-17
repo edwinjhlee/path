@@ -1,7 +1,11 @@
 import fs from "fs"
 import F from "fs-extra"
 
+import LR from "line-reader"
+
 import { Path } from "./Path"
+
+
 
 // No /
 export class File extends Path{
@@ -28,12 +32,31 @@ export class File extends Path{
         return this.write(astr)
     }
 
-    public readAsString(): string{
-        return ""
+    public async readAsString(): Promise<string> {
+        const f = await File.read(this.path)
+        return f.toString()
     }
 
     public getLineReader(){
-        
+        return new Promise((resolve, reject) => {
+            LR.open(this.path, (err, reader) => {
+                if (err) reject(err)
+                else resolve(reader)
+            })
+        })
+    }
+
+    public eachline(iteratee: (line: string) => void){
+        return LR.eachLine(this.path, iteratee)
+    }
+
+    public static read(path: string){
+        return new Promise<Buffer>((resolve, reject) => {
+            F.readFile(path, (e, data) => {
+                if (e) reject(e)
+                else resolve(data)
+            })
+        })
     }
 
 }
