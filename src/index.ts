@@ -1,3 +1,3 @@
-import { Path } from "./Poxis"
+import { Path } from "./Path"
 
 export { Path }
