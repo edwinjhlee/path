@@ -1,5 +1,3 @@
-import { Poxis } from "./Poxis"
-import { Folder } from "./Folder"
-import { File } from "./File"
+import { Path } from "./Poxis"
 
-export { Poxis, Folder, File }
+export { Path }
