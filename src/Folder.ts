@@ -2,13 +2,13 @@ import fs from "fs"
 import F from "fs-extra"
 
 
-import { Path } from "./Path"
+import { Poxis } from "./Poxis"
 import P from "path"
 
 import * as t from "./types"
 
 // With /
-export class Folder extends Path{
+export class Folder extends Poxis{
     // list files
 
     public getPathWithSlash(){
