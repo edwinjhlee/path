@@ -1,11 +1,11 @@
 
 export type GET = {
     size(): Promise<number>
-    type(): Promise<"File" | "Folder">
+    type(): Promise<"File" | "Folder" | "Other">
 
     mtime(): Promise<number>
     atime(): Promise<number>
-    mod(): Promise<void> // TODO
+    // mod(): Promise<void> // TODO
 
     body: {
         all(): Promise<string>,
@@ -17,10 +17,10 @@ export type GET = {
 
 export type SET = {
 
-    utime(utime: number): Promise<void>
+    mtime(utime: number): Promise<void>
     atime(atime: number): Promise<void>
 
-    mod(): Promise<void>
+    // mod(): Promise<void>
 
     body: {
         append(content: string): Promise<string>
@@ -29,10 +29,10 @@ export type SET = {
     }
 }
 
-export abstract class Storage{
+export abstract class Storage<MORE_GET, MORE_SET>{
 
-    get: GET = {} as GET
-    set: SET = {} as SET
+    get: GET & MORE_GET = {} as GET & MORE_GET
+    set: SET & { [index: string]: any } = {} as SET & MORE_SET
 
 }
 
