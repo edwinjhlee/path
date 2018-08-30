@@ -1,6 +1,7 @@
 import { Storage } from "./index"
 
-import fse, { pathExists, Stats } from "fs-extra"
+import fse from "fs-extra"
+
 
 export class FileSystem extends Storage<{
     stats: () => Promise<fse.Stats>
@@ -37,7 +38,17 @@ export class FileSystem extends Storage<{
 
         this.set = {
             ...this.set,
-            
+            body: {
+                async append(content: string): Promise<string> {
+                    return ""
+                },
+                async overrite(content: string): Promise<string> {
+                    return ""
+                },
+                async range(content: string, start: number, end: number): Promise<string> {
+                    return ""
+                }
+            }
         }
 
     }
