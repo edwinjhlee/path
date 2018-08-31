@@ -80,17 +80,20 @@ export async function last(
                 last_n_line --
                 if (last_n_line == 0) {
                     buffer_list.push(b.slice(last_cr + 1))
-                    break
+                    return joinBuffer(buffer_list.reverse())
                 }
                 // corner case: '\n'
-                if (last_cr > 0) continue
+                if (last_cr > 0) {
+                    continue
+                }
             }
             buffer_list.push(b)
+            break
         }
 
         offset_end = offset_start
-        break
+        if (offset_end === 0) {
+            return joinBuffer(buffer_list.reverse())
+        }
     }
-
-    return joinBuffer(buffer_list.reverse())
 }

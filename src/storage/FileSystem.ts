@@ -43,7 +43,7 @@ export class FileSystem extends Storage{
                 },
                 async range(content: string, start: number, end: number): Promise<void | Symbol> {
                     
-                    return fse.write()
+                    // return fse.write()
                 }
             }
             
