@@ -2,13 +2,13 @@ import { Storage } from "./index"
 
 async function main(){
 
-    const s: Storage<{}, {}> = {} as Storage<{}, {}>
+    const s: Storage = {} as Storage
 
-    s.get.atime()
+    s.atime.get()
 
-    await s.get.atime()
-    await s.set.atime(123)
-    await s.set.body.append("123")
+    await s.atime.get()
+    await s.atime.set(123)
+    await s.body.set.append("123")
 }
 
 main()

@@ -1,38 +1,73 @@
-
-export type GET = {
-    size(): Promise<number>
-    type(): Promise<"File" | "Folder" | "Other">
-
-    mtime(): Promise<number>
-    atime(): Promise<number>
-    // mod(): Promise<void> // TODO
-
-    body: {
-        all(): Promise<string>,
-        range(start: number, end: number): Promise<string>
-        lastLine(from: number): Promise<string>
-        firstLine(nlines: number, from: number): Promise<string>
-    }
+export function unsupported(): Symbol {
+    return Symbol("UNSUPOORTED")
 }
 
-export type SET = {
+export abstract class Storage{
 
-    mtime(utime: number): Promise<void>
-    atime(atime: number): Promise<void>
-
-    // mod(): Promise<void>
-
-    body: {
-        append(content: string): Promise<string>
-        overrite(content: string): Promise<string>
-        range(content: string, start: number, end: number): Promise<string>
+    size = {
+        async get(): Promise<number | Symbol> {
+            return unsupported()
+        }
     }
-}
 
-export abstract class Storage<MORE_GET, MORE_SET>{
+    type = {
+        async get(): Promise<"File" | "Folder" | "Other" | Symbol> {
+            return unsupported()
+        }
+    }
 
-    get: GET & MORE_GET = {} as GET & MORE_GET
-    set: SET & { [index: string]: any } = {} as SET & MORE_SET
+    mtime = {
+        async get(): Promise<number | Symbol> {
+            return unsupported()
+        },
+        async set(number: number): Promise<Symbol> {
+            return unsupported()
+        }
+    }
+
+    atime = {
+        async get(): Promise<number | Symbol> {
+            return unsupported()
+        },
+        async set(number: number): Promise<void | Symbol> {
+            return unsupported()
+        }
+    }
+
+    body = {
+
+        set: {
+            async append(content: string): Promise<void | Symbol> {
+                return unsupported()
+            },
+
+            async overrite(content: string): Promise<Symbol> {
+                return unsupported()
+            },
+
+            async range(content: string, start: number, end: number): Promise<void | Symbol> {
+                return unsupported()
+            }
+        },
+
+        get: {
+            async all(): Promise<string | Symbol> {
+                return unsupported()
+            },
+
+            async range(start: number, end: number): Promise<string | Symbol> {
+                return unsupported()
+            },
+            
+            async lastLine(from: number): Promise<string | Symbol> {
+                return unsupported()
+            },
+            
+            async firstLine(nlines: number, from: number): Promise<string | Symbol> {
+                return unsupported()
+            }
+        }
+    }
 
 }
 

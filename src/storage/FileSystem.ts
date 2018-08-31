@@ -4,54 +4,55 @@ import fse from "fs-extra"
 
 // TODO: 变阵：get.size() 变成：size.get(), mtime.get(), mtime.set()
 
-export class FileSystem extends Storage<{
-    stats: () => Promise<fse.Stats>
-}, any>{
+export class FileSystem extends Storage{
     
     constructor(
         public url: string
     ){
         super()
 
-        this.get = {
-            ...this.get,
-            size: async () => {
-                return (await this.get.stats()).size
+        const that = this
+
+        this.atime = {
+            ...super.atime,
+            async get(): Promise<number | Symbol> {
+                return (await that.stat()).size
             },
-            type: async () => {
-                const stat =  await this.get.stats()
+            async set(number: number): Promise<Symbol | void> {
+                await fse.utimes(that.url, number, number)
+            }
+        }
+
+        this.type = {
+            async get(){
+                const stat =  await that.stat()
                 return stat.isFile? "File" :
                     stat.isDirectory? "Folder":
                     "Other"
-            },
-            mtime: async () => {
-                const stat = await fse.stat(this.url)
-                return stat.mtime.getTime()
-            },
-            atime: async () => {
-                const stat = await fse.stat(this.url)
-                return stat.atime.getTime()
-            },
-            stats: async ()=>{
-                return await fse.stat(this.url)
             }
         }
 
-        this.set = {
-            ...this.set,
-            body: {
-                async append(content: string): Promise<string> {
-                    return ""
+        this.body = {
+            get: {
+                ... that.body.get
+            },
+            set: {
+                ...that.body.set,
+                async append(content: string): Promise<void | Symbol>{
+                    return fse.appendFile(that.url, content)
                 },
-                async overrite(content: string): Promise<string> {
-                    return ""
-                },
-                async range(content: string, start: number, end: number): Promise<string> {
-                    return ""
+                async range(content: string, start: number, end: number): Promise<void | Symbol> {
+                    
+                    return fse.write()
                 }
             }
+            
         }
 
+    }
+
+    async stat(){
+        return await fse.stat(this.url)
     }
 
 }
