@@ -2,6 +2,7 @@ import { Storage } from "./index"
 
 import fse from "fs-extra"
 
+// TODO: 变阵：get.size() 变成：size.get(), mtime.get(), mtime.set()
 
 export class FileSystem extends Storage<{
     stats: () => Promise<fse.Stats>
@@ -29,7 +30,7 @@ export class FileSystem extends Storage<{
             },
             atime: async () => {
                 const stat = await fse.stat(this.url)
-                return stat.atime.getTime() 
+                return stat.atime.getTime()
             },
             stats: async ()=>{
                 return await fse.stat(this.url)
