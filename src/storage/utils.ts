@@ -3,30 +3,30 @@ import fse from "fs-extra"
 export let OffsetBased = {
     async write(
         filepath: string, 
-        offset: number, 
+        file_offset: number, 
         data: string
     ){
-        const fd = await fse.open(filepath, 'r')
+        const fd = await fse.open(filepath, 'a')
     
         const buffer = new Buffer(data)
-        await fse.write(fd, buffer, 0, buffer.length, offset)
-        return offset + buffer.length
+        await fse.write(fd, buffer, 0, buffer.length, file_offset)
+        return file_offset + buffer.length
     },
 
     async read(
         filepath: string, 
-        offset: number, 
+        file_offset: number, 
         length: number | null = null
     ){
         const fd = await fse.open(filepath, 'r')
     
         if (length === null){
             const s = await fse.stat(filepath)
-            length = s.size - offset
+            length = s.size - file_offset
         }
     
         const buffer = new Buffer(length)
-        await fse.read(fd, buffer, 0, length, offset)
+        await fse.read(fd, buffer, 0, length, file_offset)
         return buffer
     }
 }

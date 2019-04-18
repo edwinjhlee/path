@@ -56,8 +56,3 @@ export class FileSystem extends Storage{
     }
 
 }
-
-new FileSystem("").get.stats()
-
-
-
