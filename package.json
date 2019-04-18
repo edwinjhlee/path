@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/lteam18/ts-path#readme",
   "devDependencies": {
-    "@types/node": "^10.1.0",
+    "@types/node": "^11.13.5",
     "ts-lint": "^4.5.1",
-    "ts-node": "^6.0.3",
-    "typescript": "^2.8.3",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.3",
     "typescript-formatter": "^7.2.0"
   },
   "dependencies": {
@@ -30,7 +30,7 @@
     "@types/line-reader": "0.0.28",
     "@utilx/semantic": "0.0.6",
     "axios": "^0.18.0",
-    "fs-extra": "^6.0.1",
+    "fs-extra": "^7.0.1",
     "line-reader": "^0.4.0",
     "lodash": "^4.17.10"
   }
