@@ -4,6 +4,7 @@ import { Directory } from "./Directory";
 import { result } from "@utilx/semantic"
 import Http from "./http";
 import { AxiosInstance } from "axios";
+import { File } from "./File";
 
 export class Path{
 
@@ -23,11 +24,33 @@ export class Path{
         return new ((this as any).constructor)(this.start, this.seperator, [...this.content.slice(0, this.content.length-1)])
     }
 
+    next(...next: string[]): Path {
+        return new Path(this.start, this.seperator,  [...this.content, ...next])
+    }
+
+    isFile$(){
+        const s = fs.statSync(this.dump())
+        return s.isFile()
+    }
+
+    /*
+        if (s.isFile()) return new File(this.start, this.seperator, this.content)
+        if (s.isDirectory()) return new Directory(this.start, this.seperator, this.content)
+    */
+
+    toDirectory() {
+        return new Directory(this.start, this.seperator, this.content)
+    }
+
+    toFile() {
+        return new File(this.start, this.seperator, this.content)
+    }
+
     async assertDirectory(){
         const p = this.dump()
         const s = await fs.stat(p)
         if (s.isDirectory()) {
-            return result.success(new Directory(this.start, this.seperator, this.content))
+            return result.success(this.toDirectory())
         } else {
             return result.failure<this>(new Error("Not a directory"))
         }

@@ -10,7 +10,19 @@ export class Directory extends Path {
     // Patterns
     list$() {
         // transfer to path
-        return fs.readdirSync(this.dump())
+        const objList = fs.readdirSync(this.dump())
+        return objList.map(e => this.next(e))
+    }
+
+    visit$(handle: (f: File | Directory) => void){
+        for (const p of this.list$()) {
+            const res = p.ensureDirectory$()
+            if (true === res.ok) {
+                res.data.visit$( handle )
+            } else {
+                handle( p.toFile() )
+            }
+        }
     }
 
     rm$() {
@@ -18,8 +30,8 @@ export class Directory extends Path {
     }
 
     rmrf$(){
-        // TODO: maybe have to delete the files first
-        return fs.rmdirSync(this.dump())
+        // Will remove sub files
+        return fs.removeSync(this.dump())
     }
 
     file(filename: string){
