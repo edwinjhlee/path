@@ -19,4 +19,14 @@ export class File extends Path {
         return fs.writeFileSync(this.dump(), content)
     }
 
+    writeAfterMkdirp$(content: any){
+        this.mkdirpForParent$().write$(content)
+        return this
+    }
+
+    mkdirpForParent$(){
+        fs.mkdirp(this.parent().dump())
+        return this
+    }
+
 }

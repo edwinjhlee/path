@@ -12,4 +12,4 @@ console.log(p1.dump())
 // 但是，如果像Java一样，那么错误流程就无影了，也并非所愿。
 // 我们只能减轻getOrThrow的影响，提供一个叫做_的函数了。
 // 定义 ensureFolder$_，采用 _ 会默认抛error
-p1.ensureFolder$().getOrThrow().list$()
+p1.toDirectory().mkdirp$().list$()

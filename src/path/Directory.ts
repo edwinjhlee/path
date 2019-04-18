@@ -8,6 +8,20 @@ export class Directory extends Path {
     // Files
     // Directory
     // Patterns
+
+    mkdirp$(){
+        fs.mkdirpSync(this.dump())
+        return this
+    }
+
+    assert$() {
+        const s = fs.statSync(this.dump())
+        if (s.isDirectory()) {
+            return this
+        }
+        return undefined
+    }
+
     list$() {
         // transfer to path
         const objList = fs.readdirSync(this.dump())
@@ -16,22 +30,23 @@ export class Directory extends Path {
 
     visit$(handle: (f: File | Directory) => void){
         for (const p of this.list$()) {
-            const res = p.ensureDirectory$()
-            if (true === res.ok) {
-                res.data.visit$( handle )
-            } else {
-                handle( p.toFile() )
+            try {
+                p.mkdirp$().visit$(handle)
+            } catch (err) {
+                handle(p.toFile())
             }
         }
     }
 
     rm$() {
-        return fs.rmdirSync(this.dump())
+        fs.rmdirSync(this.dump())
+        return this
     }
 
     rmrf$(){
         // Will remove sub files
-        return fs.removeSync(this.dump())
+        fs.removeSync(this.dump())
+        return this
     }
 
     file(filename: string){
