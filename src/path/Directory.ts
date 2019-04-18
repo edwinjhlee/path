@@ -14,7 +14,7 @@ export class Directory extends Path {
     }
 
     assert$() {
-        return fs.statSync(this.dump()).isDirectory()
+        return this.stat$().isDirectory()
     }
 
     list$() {

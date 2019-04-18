@@ -7,12 +7,8 @@ export class File extends Path {
         return fs.remove(this.dump())
     }
 
-    exists$(){
-        return fs.existsSync(this.dump())
-    }
-
     assert$(){
-        return fs.statSync(this.dump()).isFile()
+        return this.stat$().isFile()
     }
 
     ensure$(){
