@@ -65,6 +65,14 @@ export class Path{
         return new Path("/", "/")
     }
 
+    static app(){
+
+    }
+
+    static tmp(){
+
+    }
+
 }
 
 export default Path

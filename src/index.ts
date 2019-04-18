@@ -1,3 +1,4 @@
-// import { Path } from "./Path"
+import path from "./path"
+export { path }
 
-// export { Path }
+export default path
