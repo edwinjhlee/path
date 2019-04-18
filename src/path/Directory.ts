@@ -22,6 +22,17 @@ export class Directory extends Path {
         return undefined
     }
 
+    ensure$(){
+        const s = fs.statSync(this.dump())
+        if (undefined === s) return result.failure<this>(new Error("Not exisits"))
+        if (s.isFile() === false) return result.failure<this>("Already exists and not a file")
+        return result.success(this)
+    }
+
+    ensure$_(){
+        return this.ensure$().getOrThrow()
+    }
+
     list$() {
         // transfer to path
         const objList = fs.readdirSync(this.dump())
