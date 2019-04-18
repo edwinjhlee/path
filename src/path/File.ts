@@ -11,6 +11,15 @@ export class File extends Path {
         return fs.existsSync(this.dump())
     }
 
+    assert$(){
+        return fs.statSync(this.dump()).isFile()
+    }
+
+    ensure$(){
+        this.mkdirpForParent$()
+        return (this.assert$()) ? this : undefined
+    }
+
     read$(){
         return fs.readFileSync(this.dump())
     }

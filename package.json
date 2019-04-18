@@ -31,7 +31,6 @@
     "@utilx/semantic": "0.0.6",
     "axios": "^0.18.0",
     "fs-extra": "^7.0.1",
-    "line-reader": "^0.4.0",
-    "lodash": "^4.17.10"
+    "line-reader": "^0.4.0"
   }
 }
