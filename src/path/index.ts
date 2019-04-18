@@ -1,2 +1,2 @@
-import http from "./http"
-export { http }
+import path from "./path";
+export default path

@@ -1,6 +1,6 @@
-import http from "./http"
+import path from ".";
 
-const p = http.l("api.github.com").l("user").l("repo")
-console.log(p.toString())
+const p = path.https().l("api.github.com").l("user").l("repo")
+console.log(p.dump())
 
 p.get().then(e => console.log(e.data))
